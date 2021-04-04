@@ -46,13 +46,12 @@
     <script>
         $(function(){
             $('#sale-date').datetimepicker({
-                format : 'Y-MM-DD h:m:s',
+                format : 'Y-MM-DD h:m:s'
             })
             .on('dp.change',function(ev){
                 var data = $('#sale-date').val();
                 @this.set('sale_date',data);
             });
-        });
-       
+        });       
     </script>
 @endpush
