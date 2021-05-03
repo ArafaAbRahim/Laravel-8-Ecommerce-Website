@@ -29,6 +29,7 @@ use App\Http\Livewire\SearchComponent;
 use App\Http\Livewire\ThankyouComponent;
 use App\Http\Livewire\User\UserOrderDetailsComponent;
 use App\Http\Livewire\User\UserOrdersComponent;
+use App\Http\Livewire\User\UserReviewComponent;
 use App\Http\Livewire\WishlistComponent;
 
 /*
@@ -74,6 +75,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/user/dashboard',UserDashboardComponent::class)->name('user.dashboard');
     Route::get('/user/orders',UserOrdersComponent::class)->name('user.orders');
     Route::get('/user/orders/{order_id}',UserOrderDetailsComponent::class)->name('user.orderdetails');
+    Route::get('/user/review/{order_item_id}',UserReviewComponent::class)->name('user.review');
 
 });
 
