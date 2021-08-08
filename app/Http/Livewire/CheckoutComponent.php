@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Shipping;
 use App\Models\Transaction;
 use Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class CheckoutComponent extends Component
@@ -159,6 +161,13 @@ class CheckoutComponent extends Component
         Cart::instance('cart')->destroy();
         session()->forget('checkout');
 
+        $this->sendOrderConfirmationMail($order);
+
+    }
+
+    public function sendOrderConfirmationMail($order)
+    {
+        Mail::to($order->email)->send(new OrderMail($order));
     }
 
     public function verifyForCheckout()
