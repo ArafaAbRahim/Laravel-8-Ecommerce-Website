@@ -10,7 +10,7 @@
     </div>
     <div class="row">
 
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area"> 
 
             <div class="banner-shop">
                 <a href="#" class="banner-link">
@@ -118,8 +118,18 @@
                 <div class="widget-content">
                     <ul class="list-category">
                         @foreach ($categories as $category)
-                            <li class="category-item">
+                            <li class="category-item {{count($category->subCategories) > 0 ? 'has-child-cate':''}}">
                                 <a href="{{route('product.category',['category_slug'=>$category->slug])}}" class="cate-link">{{$category->name}}</a>
+                                @if(count($category->subCategories) > 0)
+                                    <span class="toggle-control">+</span>
+                                    <ul class="sub-cate">
+                                        @foreach($category->subCategories as $scategory)
+                                            <li class="category-item">
+                                                <a href="" class="cat-link"><i class="fa fa-caret-right"></i> {{$scategory->name}}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </li>
                         @endforeach
                     </ul>
