@@ -61,7 +61,7 @@ Route::get('/checkout', CheckoutComponent::class)->name('checkout');
 
 Route::get('/product/{slug}', DetailsComponent::class)->name('product.details');
 
-Route::get('/product-category/{category_slug}', CategoryComponent::class)->name('product.category');
+Route::get('/product-category/{category_slug}/{scategory_slug?}', CategoryComponent::class)->name('product.category');
 
 Route::get('/search', SearchComponent::class)->name('product.search');
 
