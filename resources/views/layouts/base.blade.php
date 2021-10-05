@@ -121,9 +121,12 @@
                                             <li class="menu-item menu-item-has-children parent" >
                                                 <a title="My Account" href="#">My Account ({{Auth::user()->name}})<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                                 <ul class="submenu curency" >
+													<li class="menu-item" >
+                                                        <a title="Profile" href="{{ route('user.profile') }}">Profile</a>
+                                                    </li>
                                                     <li class="menu-item" >
                                                         <a title="Dashboard" href="{{ route('user.dashboard') }}">Dashboard</a>
-                                                    </li>
+                                                    </li>													
 													<li class="menu-item" >
                                                         <a title="My Orders" href="{{ route('user.orders') }}">My orders</a>
                                                     </li>
