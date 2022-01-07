@@ -14,9 +14,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        @if(Session::has('message'))
-                            <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
-                        @endif
+                      
                         <form class="form-horizontal" enctype="multipart/form-data" wire:submit.prevent="addProduct">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Product Name</label>
@@ -37,7 +35,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Short Description</label>
                                 <div class="col-md-7" wire:ignore>
-                                    <textarea class="form-control" id="short_description" placeholder="Short Description" wire:model="short_description"></textarea>
+                                    <textarea class="form-control" id="" placeholder="Short Description" wire:model="short_description"></textarea>
                                     @error('short_description') <p class="text-danger">{{$message}}</p> @enderror
                                 </div>
                             </div>
@@ -45,7 +43,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Description</label>
                                 <div class="col-md-7" wire:ignore>
-                                    <textarea class="form-control" id="description" placeholder="Description" wire:model="description"></textarea>
+                                    <textarea class="form-control" id="" placeholder="Description" wire:model="description"></textarea>
                                     @error('description') <p class="text-danger">{{$message}}</p> @enderror
                                 </div>
                             </div>
@@ -154,12 +152,43 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-3 control-label">Product Attribute</label>
+                                <div class="col-md-6">
+                                   <select class="form-control" wire:model="attr">
+                                    <option value="">Select Attribute</option>
+                                    @foreach ($pattributes as $pattribute)
+                                        <option value="{{$pattribute->id}}">{{$pattribute->name}}</option>
+                                    @endforeach
+                                   </select>                                   
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-primary" wire:click.prevent="add">Add</button>
+                                </div>
+                            </div>
+
+                            @foreach($inputs as $key => $value)
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">{{$pattributes->where('id', $attribute_arr[$key])->first()->name}}</label>
+                                    <div class="col-md-6">
+                                        <input type="text" placeholder="{{$pattributes->where('id', $attribute_arr[$key])->first()->name}}" class="form-control input-md" wire:model="attribute_values.{{$value}}" />                                        
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="#" style="margin-left: 15px;" wire:click.prevent="remove({{$key}})"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <div class="form-group">
                                 <label class="col-md-3 control-label"></label>
                                 <div class="col-md-7">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
+
+                        @if(Session::has('message'))
+                            <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -176,7 +205,7 @@
                     editor.on('Change',function(e){
                         tinyMCE.triggerSave();
                         var sd_data = $('#short_description').val();
-                        @this.set('short_description', sd_data);
+                        $this.set('short_description', sd_data);
                     });
                 }
             });
@@ -187,7 +216,7 @@
                     editor.on('Change',function(e){
                         tinyMCE.triggerSave();
                         var d_data = $('#description').val();
-                        @this.set('description', d_data);
+                        $this.set('description', d_data);
                     });
                 }
             });
