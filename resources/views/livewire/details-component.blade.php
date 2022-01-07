@@ -81,13 +81,30 @@
 									<del><span class="product-price regprice">{{$product->regular_price}}</span></del>
 								</div>
 							@else
-								<div class="wrap-price"><span class="product-price">{{$product->regular_price}}</span></div>
+								<div class="wrap-price"><span class="product-price">${{$product->regular_price}}</span></div>
 							@endif
                             <div class="stock-info in-stock">
                                 <p class="availability">Availability: <b>{{$product->stock_status}}</b></p>
                             </div>
 
-                            <div class="quantity">
+							<div>
+								@foreach($product->attributeValues->unique('product_attribute_id') as $av)
+									<div class="row" style="margin-top: 20px;">
+										<div class="col-xs-2">
+											<p>{{$av->productAttribute->name}}</p>
+										</div>
+										<div class="col-xs-10">
+											<select class="form-control" style="width: 200px;" wire:model="sattr.{{$av->productAttribute->name}}">
+												@foreach($av->productAttribute->attributeValues->where('product_id', $product->id) as $pav)
+													<option value="{{$pav->value}}">{{$pav->value}}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+								@endforeach
+							</div>
+
+                            <div class="quantity" style="margin-top: 10px;">
                             	<span>Quantity:</span>
 								<div class="quantity-input">
 									<input type="text" name="product-quatity" value="1" data-max="120" pattern="[0-9]*" wire:model="qty" >									
@@ -97,11 +114,7 @@
 							</div>
 
 							<div class="wrap-butons">
-								@if($product->sale_price > 0 && $sale->status == 1 && $sale->sale_date > Carbon\Carbon::now()) 
-									<a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})">Add to Cart</a>
-                                @else
-									<a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add to Cart</a>
-								@endif															
+								<a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add To Cart</a>															
 								<div class="wrap-btn">
                                     <a href="#" class="btn btn-compare">Add Compare</a>
                                     <a href="#" class="btn btn-wishlist">Add Wishlist</a>
