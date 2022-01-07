@@ -43,9 +43,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
+                                @foreach ($products as $key=>$product)
                                     <tr>
-                                        <td>{{$product->id}}</td>
+                                        <td>{{++$key}}</td>
                                         <td><img src="{{asset('assets/images/products')}}/{{$product->image}}" width="60"></td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->stock_status}}</td>
